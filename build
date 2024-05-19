@@ -1,0 +1,13 @@
+#!/bin/bash
+set -xe
+
+
+BINARY_NAME="pixlock"
+SOURCE_DIR="./src"
+
+
+INCLUDE_DIR="-I./include"
+FLAGS="-O3 -lm -s"
+
+CC="gcc"
+$CC -o $BINARY_NAME $SOURCE_DIR/pixelock.c $INCLUDE_DIR $FLAGS
