@@ -48,13 +48,17 @@ void ofuscate_image(char *input_image_path, char *ouput_image_path, long seed) {
     int width, height, channels;
     unsigned char *image =
         stbi_load(input_image_path, &width, &height, &channels, 0);
+
     if (!image) {
         puts("Unable to open image\n");
         return;
     }
+
     shuffle_array_row(image, height, width * channels, seed);
+
     stbi_write_png(ouput_image_path, width, height, channels, image,
                    width * channels);
+
     stbi_image_free(image);
 }
 
@@ -63,16 +67,21 @@ void deofuscate_image(char *input_image_path, char *ouput_image_path,
     int width, height, channels;
     unsigned char *image =
         stbi_load(input_image_path, &width, &height, &channels, 0);
+
     if (!image) {
         puts("Unable to open image\n");
         return;
     }
+
     unsigned char *new_image =
         malloc(sizeof(*new_image) * width * height * channels);
+
     unshuffle_array_row(image, height, width * channels, seed, new_image);
 
     stbi_write_png(ouput_image_path, width, height, channels, new_image,
                    width * channels);
+
+    // clean up
     stbi_image_free(image);
     free(new_image);
 }
